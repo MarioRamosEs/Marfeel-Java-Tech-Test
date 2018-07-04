@@ -81,4 +81,14 @@ public class Site implements Serializable {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    @Override
+    public String toString() {
+        return "Site{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", rank=" + rank +
+                ", marfeelizable=" + marfeelizable +
+                '}';
+    }
 }

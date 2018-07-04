@@ -1,7 +1,9 @@
 package com.mario.techtest.controller;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mario.techtest.exception.ResourceNotFoundException;
 import com.mario.techtest.model.Site;
+import com.mario.techtest.model.SiteList;
 import com.mario.techtest.repository.SiteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,15 @@ public class SiteController {
     @PostMapping("/sites")
     public Site createSite(@Valid @RequestBody Site site) {
         return siteRepository.save(site);
+    }
+
+    @PostMapping("/test")
+    public String handlePost(@RequestBody SiteList siteList){
+        String temp = "";
+        for(Site site : siteList){
+            temp += site.toString()+"\n";
+        }
+      return temp;
     }
 
     // Get a Single Site
