@@ -1,6 +1,7 @@
 package com.mario.techtest.controller;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.mario.techtest.crawler.CrawlerController;
 import com.mario.techtest.exception.ResourceNotFoundException;
 import com.mario.techtest.model.Site;
 import com.mario.techtest.model.SiteList;
@@ -31,11 +32,8 @@ public class SiteController {
 
     @PostMapping("/test")
     public String handlePost(@RequestBody SiteList siteList){
-        String temp = "";
-        for(Site site : siteList){
-            temp += site.toString()+"\n";
-        }
-      return temp;
+        CrawlerController crawlerController = new CrawlerController(siteList);
+        return crawlerController.analyze();
     }
 
     // Get a Single Site
