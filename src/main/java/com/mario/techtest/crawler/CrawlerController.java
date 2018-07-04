@@ -15,7 +15,7 @@ public class CrawlerController {
         String output = "";
         for (Site site : sites){
             Crawler crawler = new Crawler(site);
-            output += crawler.analyze() + "\n";
+            crawler.start();
         }
         return output;
     }

@@ -21,8 +21,8 @@ public class Site implements Serializable {
     private String url;
 
     private int rank;
-
     private int marfeelizable; //-1 0 1
+    private String title;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -80,6 +80,14 @@ public class Site implements Serializable {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override
