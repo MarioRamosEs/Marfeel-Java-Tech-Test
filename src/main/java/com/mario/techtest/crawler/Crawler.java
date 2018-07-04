@@ -29,14 +29,6 @@ public class Crawler implements Runnable {
             //e.printStackTrace();
         }
 
-        System.out.println(site.getMarfeelizable()+" --- "+site.getUrl());
-    }
-
-    public void start () {
-        //System.out.println("Starting " +  site.getUrl() );
-        if (t == null) {
-            t = new Thread (this);
-            t.start ();
-        }
+        //System.out.println(site.getMarfeelizable()+" --- "+site.getUrl());
     }
 }
