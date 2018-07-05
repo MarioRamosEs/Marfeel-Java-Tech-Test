@@ -1,5 +1,7 @@
 package com.mario.techtest.crawler;
 
+import com.mario.techtest.crawler.checker.Checker;
+import com.mario.techtest.crawler.checker.CheckerTitleNews;
 import com.mario.techtest.model.Site;
 
 import java.util.ArrayList;
@@ -8,40 +10,29 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class CrawlerController {
-    ArrayList<Site> sites;
+    private ArrayList<Site> sites;
+    private ArrayList<Checker> checkers;
 
     public CrawlerController(ArrayList<Site> sites){
         this.sites = sites;
+
+        //Set checkers
+        checkers = new ArrayList<>();
+        checkers.add(new CheckerTitleNews());
     }
 
-    /*public String analyze(){
-        String output = "";
-        for (Site site : sites){
-            Crawler crawler = new Crawler(site);
-            crawler.start();
-        }
-        return output;
-    }*/
-
-    public String analyze(){
+    public void analyze(){
         ExecutorService es = Executors.newCachedThreadPool();
         for (Site site : sites){
-            Crawler crawler = new Crawler(site);
+            Crawler crawler = new Crawler(site, checkers);
             es.execute(crawler);
-            //crawler.start();
         }
 
         es.shutdown();
         try {
-            boolean finshed = es.awaitTermination(1, TimeUnit.MINUTES);
+            es.awaitTermination(1, TimeUnit.MINUTES); // Thread timeout 1 minute
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        String output = "";
-        for (Site site : sites){
-            output += site.getMarfeelizable()+" --- "+site.getUrl() + "\n";
-        }
-        return output;
     }
 }

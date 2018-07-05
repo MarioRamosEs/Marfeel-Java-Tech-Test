@@ -1,34 +1,35 @@
 package com.mario.techtest.crawler;
 
+import com.mario.techtest.crawler.checker.Checker;
 import com.mario.techtest.model.Site;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Crawler implements Runnable {
     private Site site;
-    private Thread t;
+    private ArrayList<Checker> checkers;
 
-    Crawler(Site site){
+    Crawler(Site site, ArrayList<Checker> checkers) {
         this.site = site;
+        this.checkers = checkers;
     }
 
     @Override
     public void run() {
         try {
-            Document document = Jsoup.connect("http://"+site.getUrl()).get();
-            site.setTitle(document.title());
+            Document document = Jsoup.connect("http://" + site.getUrl()).get();
 
-            if(site.getTitle().contains("news") || site.getTitle().contains("noticias")){
-                site.setMarfeelizable(1);
-            }else{
-                site.setMarfeelizable(-1);
+            boolean marfeelizable = true;
+            for (Checker checker : checkers) {
+                if (!checker.check(document)) marfeelizable = false;
             }
+            site.setMarfeelizable(marfeelizable);
+
         } catch (IOException e) {
             //e.printStackTrace();
         }
-
-        //System.out.println(site.getMarfeelizable()+" --- "+site.getUrl());
     }
 }

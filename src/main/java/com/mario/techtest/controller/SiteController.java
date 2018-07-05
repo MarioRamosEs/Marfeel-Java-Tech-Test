@@ -33,7 +33,14 @@ public class SiteController {
     @PostMapping("/test")
     public String handlePost(@RequestBody SiteList siteList){
         CrawlerController crawlerController = new CrawlerController(siteList);
-        return crawlerController.analyze();
+        crawlerController.analyze();
+
+        String output = "";
+        for (Site site : siteList){
+            siteRepository.save(site);
+            output += site.isMarfeelizable()+" --- "+site.getUrl() + "\n";
+        }
+        return output;
     }
 
     // Get a Single Site
@@ -53,7 +60,7 @@ public class SiteController {
 
         site.setUrl(siteDetails.getUrl());
         site.setRank(siteDetails.getRank());
-        site.setMarfeelizable(siteDetails.getMarfeelizable());
+        site.setMarfeelizable(siteDetails.isMarfeelizable());
 
         Site updatedSite = siteRepository.save(site);
         return updatedSite;
