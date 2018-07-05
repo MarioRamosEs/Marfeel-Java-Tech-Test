@@ -1,17 +1,14 @@
 package com.mario.techtest.controller;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mario.techtest.crawler.CrawlerController;
-import com.mario.techtest.exception.ResourceNotFoundException;
 import com.mario.techtest.model.Site;
 import com.mario.techtest.model.SiteList;
 import com.mario.techtest.repository.SiteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
