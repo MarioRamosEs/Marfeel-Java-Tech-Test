@@ -9,9 +9,10 @@ format. For every URL, your crawler will visit the site and perform the test to 
 - Post a Json in the route "/api/marfeelCheck"
 - Enjoy the results. They are also stored in the DB.
 
-# JSon Example
+# Json Example
 ```
-[{
+[
+    {
         "url": "elpais.com/tag/fecha/ultimahora",
         "rank": 2
     },
