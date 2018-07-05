@@ -12,7 +12,7 @@ public class Crawler implements Runnable {
     private Site site;
     private ArrayList<Checker> checkers;
 
-    Crawler(Site site, ArrayList<Checker> checkers) {
+    public Crawler(Site site, ArrayList<Checker> checkers) {
         this.site = site;
         this.checkers = checkers;
     }
@@ -21,15 +21,17 @@ public class Crawler implements Runnable {
     public void run() {
         try {
             Document document = Jsoup.connect("http://" + site.getUrl()).get();
-
-            boolean marfeelizable = true;
-            for (Checker checker : checkers) {
-                if (!checker.check(document)) marfeelizable = false;
-            }
-            site.setMarfeelizable(marfeelizable);
-
+            site.setMarfeelizable(isMarfeelizable(document));
         } catch (IOException e) {
             //e.printStackTrace();
         }
+    }
+
+    public boolean isMarfeelizable(Document document){
+        boolean marfeelizable = true;
+        for (Checker checker : checkers) {
+            if (!checker.check(document)) marfeelizable = false;
+        }
+        return marfeelizable;
     }
 }
