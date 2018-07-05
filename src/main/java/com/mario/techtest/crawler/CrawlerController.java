@@ -28,7 +28,7 @@ public class CrawlerController {
             es.execute(crawler);
         }
 
-        es.shutdown();
+        es.shutdown(); //Wait until all threads finished
         try {
             es.awaitTermination(1, TimeUnit.MINUTES); // Thread timeout 1 minute
         } catch (InterruptedException e) {

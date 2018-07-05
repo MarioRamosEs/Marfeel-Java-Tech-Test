@@ -9,6 +9,7 @@ import com.mario.techtest.repository.SiteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -18,7 +19,22 @@ public class SiteController {
     @Autowired
     SiteRepository siteRepository;
 
-    // Get All Sites
+    @PostMapping("/marfeelCheck")
+    public String handlePost(@RequestBody SiteList siteList) {
+        CrawlerController crawlerController = new CrawlerController(siteList);
+        crawlerController.analyze();
+
+        //Save all sites and give a output message
+        String output = "";
+        for (Site site : siteList) {
+            siteRepository.save(site);
+            output += site.isMarfeelizable() + " --- " + site.getUrl() + "\n";
+        }
+        return output;
+    }
+
+    /*
+        // Get All Sites
     @GetMapping("/sites")
     public List<Site> getAllSites() {
         return siteRepository.findAll();
@@ -28,19 +44,6 @@ public class SiteController {
     @PostMapping("/sites")
     public Site createSite(@Valid @RequestBody Site site) {
         return siteRepository.save(site);
-    }
-
-    @PostMapping("/test")
-    public String handlePost(@RequestBody SiteList siteList){
-        CrawlerController crawlerController = new CrawlerController(siteList);
-        crawlerController.analyze();
-
-        String output = "";
-        for (Site site : siteList){
-            siteRepository.save(site);
-            output += site.isMarfeelizable()+" --- "+site.getUrl() + "\n";
-        }
-        return output;
     }
 
     // Get a Single Site
@@ -75,5 +78,5 @@ public class SiteController {
         siteRepository.delete(site);
 
         return ResponseEntity.ok().build();
-    }
+    }*/
 }
